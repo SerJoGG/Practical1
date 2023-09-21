@@ -1,0 +1,165 @@
+﻿using System;
+
+class Smej
+{
+    static void Main()
+    {
+        Console.Write("Кол-во пар вершин: ");
+        int x = int.Parse(Console.ReadLine());
+        int y = 2;
+        Console.WriteLine("Заполни матрицу");
+        int[,] arr = new int[x, y];
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                Console.Write("arr[" + i + "," + j + "]: ");
+                arr[i, j] = int.Parse(Console.ReadLine());
+            }
+        }
+        Console.WriteLine("----------------------");
+
+        for (int i = 0; i < x; i++)
+        {
+            for (int j = 0; j < y; j++)
+            {
+                Console.WriteLine(" arr[" + i + "," + j + "]: " + arr[i, j]);
+            }
+            Console.WriteLine("----------------------");
+        }
+        Console.Write("Кол-во вершин: ");
+        int V = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Ввыберите ориентированный или неориентированый граф (Y/N): ");
+        string Chose = Console.ReadLine();
+
+        switch (Chose)
+        {
+            case "Y": //ориентированный
+                for (int i = 0; i < V; i++) //cписок
+                {
+                    Console.Write(i + " -> ");
+                    for (int j = 0; j < arr.GetLength(0); j++)
+                    {
+                        if (arr[j, 0] == i)
+                        {
+                            Console.Write(arr[j, 1] + " ");
+                        }
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine("----------------------");
+                //----------------------------------------------------------------------
+                for (int i = 0; i < V; i++) //матрица смежности
+                {
+                    Console.Write("\t" + i);
+                }
+                Console.WriteLine();
+
+                for (int i = 0; i < V; i++) // вертикаль
+                {
+                    Console.Write(i + "\t");
+                    for (int j = 0; j < V; j++) // горизонталь
+                    {
+                        int k = 0;
+                        for (int h = 0; h < arr.GetLength(0); h++)
+                        {
+                            if (i == arr[h, 0] && j == arr[h, 1]) { k++; }
+                        }
+                        Console.Write(k + "\t");
+                    }
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine("----------------------");
+
+                Console.Write("\t");
+                for (int i = 0; i < arr.GetLength(0); i++) //матрица инцидентности
+                {
+                    Console.Write(arr[i, 0] + "-" + arr[i, 1] + "\t");
+                }
+
+                Console.WriteLine();
+                for (int i = 0; i < V; i++) // вертикаль
+                {
+                    Console.Write(i + "\t");
+                    for (int j = 0; j < arr.GetLength(0); j++) // горизонталь
+                    {
+                        int k = 0;
+                        if (arr[j, 0] == i) { k = 1; }
+                        else if (arr[j, 1] == i) { k = -1; }
+                        if (Chose == "N") { k *= k; }
+                        Console.Write(k + "\t");
+                    }
+                    Console.WriteLine();
+                }
+
+                break;
+            case "N": //неориентированный
+                for (int i = 0; i < V; i++) //cписок
+                {
+                    Console.Write(i + " : ");
+                    for (int j = 0; j < arr.GetLength(0); j++)
+                    {
+                        if (arr[j, 0] == i)
+                        {
+                            Console.Write(arr[j, 1] + " ");
+                        }
+                        if (arr[j, 1] == i)
+                        {
+                            Console.Write(arr[j, 0] + " ");
+                        }
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine("----------------------");
+                //----------------------------------------------------------------------
+                for (int i = 0; i < V; i++) //матрица смежности
+                {
+                    Console.Write("\t" + i);
+                }
+                Console.WriteLine();
+
+                for (int i = 0; i < V; i++) // вертикаль
+                {
+                    Console.Write(i + "\t");
+                    for (int j = 0; j < V; j++) // горизонталь
+                    {
+                        int k = 0;
+                        for (int h = 0; h < arr.GetLength(0); h++)
+                        {
+                            if (i == arr[h, 0] && j == arr[h, 1]) { k++; }
+                            if (i == arr[h, 1] && j == arr[h, 0]) { k++; }
+                        }
+                        Console.Write(k + "\t");
+                    }
+                    Console.WriteLine();
+                }
+
+                Console.WriteLine("----------------------");
+
+                Console.Write("\t");
+                for (int i = 0; i < arr.GetLength(0); i++) //матрица инцидентности
+                {
+                    Console.Write(arr[i, 0] + "-" + arr[i, 1] + "\t");
+                }
+
+                Console.WriteLine();
+                for (int i = 0; i < V; i++) // вертикаль
+                {
+                    Console.Write(i + "\t");
+                    for (int j = 0; j < arr.GetLength(0); j++) // горизонталь
+                    {
+                        int k = 0;
+                        if (arr[j, 0] == i) { k = 1; }
+                        else if (arr[j, 1] == i) { k = 1; }
+                        Console.Write(k + "\t");
+                    }
+                    Console.WriteLine();
+                }
+                break;
+        }
+
+    }
+
+}
